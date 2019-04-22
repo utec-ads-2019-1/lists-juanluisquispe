@@ -14,7 +14,10 @@ class ForwardIterator : public Iterator<T> {
         }
 
         bool operator!=(ForwardIterator<T> other) {
-            // TODO
+            if(*other == *current)
+                return false
+            else
+                return true;
         }
 
         ForwardIterator<T> operator++() {
@@ -22,7 +25,7 @@ class ForwardIterator : public Iterator<T> {
         }
 
         T operator*() {
-            // TODO
+            return *current;
         }
 };
 

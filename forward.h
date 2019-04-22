@@ -31,7 +31,7 @@ class ForwardList : public List<T> {
 
         void push_back(T value) {
             Node<T>* prevtail = List<T>::tail;
-            List<T>::tail = new Node<T>(value , nullptr , List<T>::tail);
+            List<T>::tail = new Node<T>(value , nullptr , nullptr);
             if(nodes == 0)
                 List<T>::head = List<T>::tail;
             else
@@ -53,26 +53,39 @@ class ForwardList : public List<T> {
                 it = it->next;
             }
             List<T>::tail = it;
+            List<T>::nodes--;
         }
 
         T operator[](int index) {
-            // TODO
+            Node<T>* it = List<T>::head;
+            for(int i = 0 ; i <= index ; i++){
+                it = it->next;
+            }
+            return it->data;
         }
 
         bool empty() {
-            if(nodes == 0){
+            if(nodes == 0)
                 return true;
-            }
             else
                 return false;
         }
 
         int size() {
-            return nodes;
+            return List<T>::nodes;
         }
 
         void clear() {
-            // TODO
+            List<T>* it = List<T>::head;
+            List<T>* it2;
+            for(int i = 0 ; i <= nodes ; i++){
+                it2 = it->next;
+                it->killSelf();
+                it = it2;
+            }
+            List<T>::head = nullptr;
+            List<T>::tail = nullptr;
+            List<T>::nodes = 0;
         }
 
         void sort() {
@@ -88,11 +101,11 @@ class ForwardList : public List<T> {
         }
 
         ForwardIterator<T> begin() {
-            // TODO
+            ForwardIterator<T> = List<T>::head;
         }
 
 	    ForwardIterator<T> end() {
-            // TODO
+            ForwardITerator<T> = List<T>::tail;
         }
 
         void merge(ForwardList<T> list) {

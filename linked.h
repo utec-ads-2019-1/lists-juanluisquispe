@@ -10,43 +10,81 @@ class LinkedList : public List<T> {
         LinkedList() : List<T>() {}
 
         T front() {
-            // TODO
+            if(List<T>::head == nullptr) throw(out_of_range("Segmentation Fault"));
+            return List<T>::head -> data;
         }
 
         T back() {
-            // TODO
+            if(List<T>::tail == nullptr) throw(out_of_range("Segmentation Fault"));
+            return List<T>::tail -> data;
         }
 
         void push_front(T value) {
-            // TODO
+            Node<T>* it = List<T>::head;
+            List<T>::head = new Node<T>(value , List<T>::head , nullptr);
+            if(nodes == 0)
+                List<T>::tail = List<T>::head;
+            else
+                it->prev = List<T>::head;
+            List<T>::nodes++;
         }
 
         void push_back(T value) {
-            // TODO
+            Node<T>* it = List<T>::tail;
+            List<T>::tail = new Node<T>(value , nullptr , List<T>::tail);
+            if(nodes == 0)
+                List<T>::head = List<T>::tail;
+            else
+                it->next = List<T>::tail;
+            List<T>::nodes++;
         }
 
         void pop_front() {
-            // TODO
+            Node<T>* it = List<T>::head;
+            List<T>::head = List<T>::head->next;
+            it->killSelf();
+            List<T>::head->prev = nullptr;
+            List<T>::nodes--;
         }
 
         void pop_back() {
-            // TODO
+            Node<T>* it = List<T>::tail;
+            List<T>::tail = List<T>::tail->prev;
+            it->killSelf();
+            List<T>::tail->next = nullptr;
+            List<T>::nodes--;
         }
 
         T operator[](int index) {
-            // TODO
+            Node<T>* it = List<T>::head;
+            for(int i = 0 ; i <= index ; i++){
+                it = it->next;
+            }
+            return it->data;
         }
 
         bool empty() {
-            // TODO
+            if(nodes == 0)
+                return true;
+            else
+                return false;
         }
 
         int size() {
-            // TODO
+            return List<T>::nodes;
         }
 
         void clear() {
-            // TODO
+            List<T>* it = List<T>::head;
+            List<T>* it2;
+            for(int i = 0 ; i <= nodes ; i++){
+                it2 = it->next;
+                it->killSelf();
+                it = it2;
+            }
+            List<T>::head = nullptr;
+            List<T>::tail = nullptr;
+            List<T>::nodes = 0;
         }
 
         void sort() {

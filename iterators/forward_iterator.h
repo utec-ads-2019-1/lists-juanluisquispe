@@ -18,7 +18,7 @@ class ForwardIterator : public Iterator<T> {
         }
 
         ForwardIterator<T> operator++() {
-            // TODO
+            Iterator<T>::current = Iterator<T>::current->next;
         }
 
         T operator*() {
